@@ -21,12 +21,16 @@ def about(request):
 #contact
 def contact(request):
     return render(request,'vehicle/contact.html')
+#billing
+def billing(request):
+    return render(request,'vehicle/billing.html')
 
 # dashboard
 def dashboard(request):
     if request.user.is_authenticated:
         posts = ServiceBook.objects.all()
         user = request.user
+
         full_name = user.get_full_name()
         gps = user.groups.all()
         return render(request,'vehicle/dashboard.html',{'posts':posts,'fname':full_name, 'groups':gps})

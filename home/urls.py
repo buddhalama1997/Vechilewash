@@ -10,6 +10,7 @@ urlpatterns =[
    path('login/',views.user_login, name= 'login') ,
    path('logout/',views.user_logout, name= 'logout'),
    path('addpost/',views.add_booking, name= 'addpost'),
+   path('billing/',views.billing, name= 'billing'),
    path('updatepost/<int:id>/',views.update_booking, name= 'updatepost'),
    path('delete/<int:id>/',views.delete_booking, name= 'deletepost'),
 ]
