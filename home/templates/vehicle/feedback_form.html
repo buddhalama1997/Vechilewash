@@ -1,0 +1,11 @@
+<!-- feedback_form.html -->
+{% extends 'vehicle/base.html' %}
+{% load static %}
+{% block content %}
+  <h1>Feedback</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}

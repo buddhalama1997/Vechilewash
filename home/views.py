@@ -1,7 +1,5 @@
-
-
 # Create your views here.
-
+from .forms import FeedbackForm
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -9,6 +7,7 @@ from .forms import SignUpForm, loginForm,postForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import ServiceBook
+from django.core.mail import send_mail
 #Home
 def home(request):
     posts = ServiceBook.objects.all()
@@ -24,6 +23,7 @@ def contact(request):
 #billing
 def billing(request):
     return render(request,'vehicle/billing.html')
+
 
 # dashboard
 def dashboard(request):
@@ -121,3 +121,26 @@ def delete_booking(request,id):
             return HttpResponseRedirect('/vehicle/dashboard/')
     else:
         return HttpResponseRedirect('/vehicle/login/')
+
+
+
+def feedback_view(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            # send email
+            subject = 'Feedback from {}'.format(name)
+            from_email = email
+            recipient_list = ['sanjithasaru123124@gmail.com']
+            html_message = '<p>Name: {}</p><p>Email: {}</p><p>Message: {}</p>'.format(name, email, message)
+            send_mail(subject, '', from_email, recipient_list, html_message=html_message)
+            return render(request, 'vehicle/feedback_thankyou.html')
+    else:
+        form = FeedbackForm()
+    return render(request, 'vehicle/feedback_form.html', {'form': form})
+#thankyoupage
+def thankyou(request):
+    return render(request,'vehicle/feedback_form.html')

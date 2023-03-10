@@ -38,3 +38,8 @@ class postForm(forms.ModelForm):
                     'serviceDate': forms.DateInput(attrs={'class':'form-control'}),
                     'serviceTime': forms.TimeInput(attrs={'class':'form-control'})
                 }
+    
+class FeedbackForm(forms.Form):
+    name = forms.CharField(label='Your name', max_length=100)
+    email = forms.EmailField(label='Your email', max_length=100)
+    message = forms.CharField(label='Your message', widget=forms.Textarea)
