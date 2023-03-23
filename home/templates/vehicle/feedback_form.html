@@ -3,9 +3,19 @@
 {% load static %}
 {% block content %}
   <h1>Feedback</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+  <div class="col-sm-3">
+    <form method="post" class="form-group ">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="col-sm-8">
+    <div class="text-center">
+      <img src="../../static/blog/img/logo.jpg" alt="picture not found" width="350px" height="350px">
+      <h1>Pathari Car Wash and Repairing Center</h1>
+    </div>
+  </div>
+ 
 {% endblock %}

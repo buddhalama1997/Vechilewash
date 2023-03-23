@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import ServiceBook
 from django.core.mail import send_mail
+from datetime import datetime,date
 #Home
 def home(request):
     posts = ServiceBook.objects.all()
@@ -84,11 +85,18 @@ def add_booking(request):
                 problemInVechile = form.cleaned_data['problemInVechile']
                 serviceDate = form.cleaned_data['serviceDate']
                 serviceTime = form.cleaned_data['serviceTime']
-                pst = ServiceBook(serviceType=serviceType, problemInVechile = problemInVechile, serviceDate = serviceDate,serviceTime = serviceTime)
-                pst.save()
-                if pst is not None:
-                    messages.success(request,'Successfully booked!!')
-                    form = postForm()
+                currentdate = date.today()
+                if serviceDate >= currentdate:
+                    pst = ServiceBook(serviceType=serviceType, problemInVechile = problemInVechile, serviceDate = serviceDate,serviceTime = serviceTime)
+                    pst.save()
+                    if pst is not None:
+                        messages.success(request,'Successfully booked!!')
+                        form = postForm()
+                else:
+                    messages.error(request,'date is not valid!! Please choose the correct date.')
+            
+                # print(customerid)
+                
         else:
             form = postForm()
         return render(request, 'vehicle/addpost.html',{'form':form})

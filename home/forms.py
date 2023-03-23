@@ -40,6 +40,6 @@ class postForm(forms.ModelForm):
                 }
     
 class FeedbackForm(forms.Form):
-    name = forms.CharField(label='Your name', max_length=100)
-    email = forms.EmailField(label='Your email', max_length=100)
+    name = forms.CharField(label='Your name', max_length=50)
+    email = forms.EmailField(label='Your email', max_length=50)
     message = forms.CharField(label='Your message', widget=forms.Textarea)
