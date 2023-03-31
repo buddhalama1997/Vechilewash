@@ -1,4 +1,3 @@
-
 from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm,UsernameField
@@ -42,4 +41,10 @@ class postForm(forms.ModelForm):
 class FeedbackForm(forms.Form):
     name = forms.CharField(label='Your name', max_length=50)
     email = forms.EmailField(label='Your email', max_length=50)
+    message = forms.CharField(label='Your message', widget=forms.Textarea)
+
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Your name', max_length=50)
+    email = forms.EmailField(label='Your email', max_length=50)
+    contact_number = forms.CharField(label="Your Number",max_length=10)
     message = forms.CharField(label='Your message', widget=forms.Textarea)

@@ -3,7 +3,7 @@ from .forms import FeedbackForm
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .forms import SignUpForm, loginForm,postForm
+from .forms import SignUpForm, loginForm,postForm, ContactForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import ServiceBook
@@ -18,9 +18,7 @@ def home(request):
 def about(request):
     return render(request,'vehicle/about.html')
 
-#contact
-def contact(request):
-    return render(request,'vehicle/contact.html')
+
 #billing
 def billing(request):
     return render(request,'vehicle/billing.html')
@@ -152,3 +150,21 @@ def feedback_view(request):
 #thankyoupage
 def thankyou(request):
     return render(request,'vehicle/feedback_form.html')
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            contact_number = form.cleaned_data['contact_number']
+            message = form.cleaned_data['message']
+            # send email
+            subject = 'Contact from {}'.format(name)
+            from_email = email
+            recipient_list = ['sanjithasaru123124@gmail.com']
+            html_message = '<p>Name: {}</p><p>Number: {}</p><p>Email: {}</p><p>Message: {}</p>'.format(name,contact_number, email, message)
+            send_mail(subject, '', from_email, recipient_list, html_message=html_message)
+            return render(request, 'vehicle/contactthank.html')
+    else:
+        form = ContactForm()
+    return render(request, 'vehicle/contact.html', {'form': form})
