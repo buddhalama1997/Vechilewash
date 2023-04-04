@@ -1,7 +1,8 @@
 # Create your views here.
+import io
 from .forms import FeedbackForm
 from django.contrib.auth.models import Group
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render
 from .forms import SignUpForm, loginForm,postForm, ContactForm
 from django.contrib import messages
@@ -9,6 +10,11 @@ from django.contrib.auth import authenticate, login, logout
 from .models import ServiceBook
 from django.core.mail import send_mail
 from datetime import datetime,date
+
+from reportlab.pdfgen import canvas
+
+from django.template.loader import get_template
+
 #Home
 def home(request):
     posts = ServiceBook.objects.all()
@@ -168,3 +174,44 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, 'vehicle/contact.html', {'form': form})
+
+
+
+def generate_pdf(request):
+    # Process the form submission and retrieve the form data
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    address = request.POST.get('address')
+    total = request.POST.get('total')
+
+    
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 750, "Pathari Car Wash and Repairing Center")
+    p.drawString(100, 700, "Bill Amount")
+    p.drawString(100, 650, "Name    :")
+    p.drawString(200, 650, name)
+    
+    p.drawString(100, 600, "Email   :")
+    p.drawString(200, 600, email)
+    p.drawString(100, 550, "Address :")
+    p.drawString(200, 550, address)
+    p.drawString(100, 500, "Total    :")
+    p.drawString(200, 500, total)
+    
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # File response with PDF content.
+    pdf = buffer.getvalue()
+    buffer.close()
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="hello.pdf"'
+    return response

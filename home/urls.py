@@ -15,4 +15,6 @@ urlpatterns =[
    path('thankyou/',views.thankyou, name= 'thankyou'),
    path('updatepost/<int:id>/',views.update_booking, name= 'updatepost'),
    path('delete/<int:id>/',views.delete_booking, name= 'deletepost'),
+   path('generate-pdf/', views.generate_pdf, name='generate-pdf'),
+
 ]
