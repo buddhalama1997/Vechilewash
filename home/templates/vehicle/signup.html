@@ -1,28 +1,72 @@
-{% extends 'vehicle/base.html' %}
 {% load static %}
-{% block content %}
-<div class=" position-relative text-success">
-    <h3 class="text-center top-100"> Register Page </h3>
-    {% if messages %}
-        {% for message in messages %}
-           <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5"{% endif %}>{{ message }}</p>
-        {% endfor %}   
-    {% endif %}
-    <form action="" method="post" novalidate class="position-absolute top-100 start-50 col-sm-4 text-center"> 
-        {% csrf_token %}
-        {% for fm in form %}
-            <div class="form-group">
-            {{fm.label_tag}} {{fm}}
-            <small class="text-danger">{{fm.errors|striptags}}</small>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/login.css' %}">
+</head>
+<body>
+    <section class="h-100 gradient-form" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+              <div class="card rounded-3 text-black">
+                <div class="row g-0">
+                  <div class="col-lg-6">
+                    <div class="card-body p-md-5 mx-md-4">
+                      <div class="text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                          style="width: 185px;" alt="logo">
+                        <h4 class="mt-1 mb-5 pb-1">Pathari Car Wash and Repairing Center</h4>
+                      </div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5"{% endif %}>{{ message }}</p>
+                        {% endfor %}   
+                        {% endif %}
+                        <form action="" method="post" novalidate> 
+                            {% csrf_token %}
+                            {% for fm in form %}
+                                <div class="form-group">
+                                {{fm.label_tag}} {{fm}}
+                                <small class="text-danger">{{fm.errors|striptags}}</small>
+                                </div>
+                            {% endfor %}
+                            <input type="submit" value="Submit" class="btn btn-success">
+                            {% if form.non_field_errors %}
+                                {% for error in form.non_field_errors %}
+                                <p class="alert alert-danger my-3">{{error}}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                        <p class="mb-0 me-2">Already have a account?</p>
+                        <a class="btn btn-success" href="{% url 'login' %}" role="button">Login</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                    <div class="text-center">
+                        <img src="../../static/blog/img/logo.jpg" alt="picture not found" width="350px" height="350px">
+                        <h1 class="text-light">Pathari Car Wash and Repairing Center</h1>
+                      </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        {% endfor %}
-        <input type="submit" value="Submit" class="btn btn-primary">
-        {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-            <p class="alert alert-danger my-3">{{error}}</p>
-            {% endfor %}
-        {% endif %}
-    </form>
-</div>
+          </div>
+        </div>
+      </section>
+    
+</body>
+</html>
 
-{% endblock content %}
+
+
+
+
+

@@ -33,7 +33,7 @@ class postForm(forms.ModelForm):
         fields = ['serviceType','problemInVechile','serviceDate','serviceTime']
         widgets = {
                     'serviceType': forms.TextInput(attrs={'class':'form-control'}),
-                    'problemInVechile': forms.Textarea(attrs={'class':'form-control'}),
+                    'problemInVechile': forms.TextInput(attrs={'class':'form-control'}),
                     'serviceDate': forms.DateInput(attrs={'class':'form-control'}),
                     'serviceTime': forms.TimeInput(attrs={'class':'form-control'})
                 }
@@ -41,10 +41,10 @@ class postForm(forms.ModelForm):
 class FeedbackForm(forms.Form):
     name = forms.CharField(label='Your name', max_length=50)
     email = forms.EmailField(label='Your email', max_length=50)
-    message = forms.CharField(label='Your message', widget=forms.Textarea)
+    message = forms.CharField(label='Your message', max_length=100)
 
 class ContactForm(forms.Form):
     name = forms.CharField(label='Your name', max_length=50)
     email = forms.EmailField(label='Your email', max_length=50)
     contact_number = forms.CharField(label="Your Number",max_length=10)
-    message = forms.CharField(label='Your message', widget=forms.Textarea)
+    message = forms.CharField(label='Your message', max_length=100)

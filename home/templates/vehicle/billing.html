@@ -1,49 +1,66 @@
 {% extends 'vehicle/base.html' %}
 
 {% block content %}
-<div class="col-sm-6">
-    <form method="POST" action="{% url 'generate-pdf' %}">
-        {% csrf_token %}
-        <div class="row">
-          <div class="col-50">
-            <h3>Billing Address</h3>
-            
-            <table>
-                <tr>
-                    <td>
-                        <label for="name"><i class="fa fa-user"></i> Full Name</label>
-                    </td>
-                    <td>
-                        <input type="text" id="name" name="name" placeholder="Sanjita Saru">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                    </td>
-                    <td>
-                        <input type="text" id="email" name="email" placeholder="sanjita@example.com">
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="address"><i class="fa fa-address-card-o"></i> Address</label></td>
-                    <td><input type="text" id="adr" name="address" placeholder="itahari"></td>
-                </tr>
-                <tr>
-                    <td><label for="total"><i class="fa fa-institution"></i>Total</label></td>
-                    <td><input type="text" id="total" name="total" placeholder="$$$"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><button type="submit">Submit</button></td>
-                </tr>
-            </table>
+<section class="h-100 gradient-form" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
+  
+                <form method="POST" class= "text-danger" action="{% url 'khalti' %}">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-50">
+        <h3>Billing Address</h3>
+        
+        <table>
+            <tr>
+                <td>
+                    <label for="name"><i class="fa fa-user"></i> Full Name</label>
+                </td>
+                <td>
+                    <input type="text" id="name" name="name" placeholder="Sanjita Saru">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                </td>
+                <td>
+                    <input type="text" id="email" name="email" placeholder="sanjita@example.com">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="address"><i class="fa fa-address-card-o"></i> Address</label></td>
+                <td><input type="text" id="adr" name="address" placeholder="itahari"></td>
+            </tr>
+            <tr>
+                <td><label for="total"><i class="fa fa-institution"></i>Total</label></td>
+                <td><input type="text" id="total" name="total" placeholder="$$$"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit" class="text-danger">Generate Bill</button></td>
+            </tr>
+        </table>
+      </div>
+    </div>
+</form>
+                
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                <div class="text-center">
+                    <img src="../../static/blog/img/logo.jpg" alt="picture not found" width="350px" height="350px">
+                    <h1 class="text-light">Pathari Car Wash and Repairing Center</h1>
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
-    </form>
-</div>
-
-<div class="text-center col-sm-6">
-    <img src="../../static/blog/img/logo.jpg" alt="picture not found" width="350px" height="350px">
-    <h1>Pathari Car Wash and Repairing Center</h1>
-  </div>
+      </div>
+    </div>
+  </section>
 {% endblock content %}

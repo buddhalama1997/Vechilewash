@@ -2,7 +2,7 @@
 import io
 from .forms import FeedbackForm
 from django.contrib.auth.models import Group
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
 from django.shortcuts import render
 from .forms import SignUpForm, loginForm,postForm, ContactForm
 from django.contrib import messages
@@ -28,6 +28,14 @@ def about(request):
 #billing
 def billing(request):
     return render(request,'vehicle/billing.html')
+
+def khalti(request):
+    total = request.POST.get('total')
+    return render(request,'vehicle/khalti.html',{'total':total})
+def khalti_verification(request):
+    data ={}
+    return JsonResponse(data)
+
 
 
 # dashboard
@@ -89,23 +97,21 @@ def add_booking(request):
                 problemInVechile = form.cleaned_data['problemInVechile']
                 serviceDate = form.cleaned_data['serviceDate']
                 serviceTime = form.cleaned_data['serviceTime']
+                pst = ServiceBook(serviceType=serviceType, problemInVechile = problemInVechile, serviceDate = serviceDate,serviceTime = serviceTime)
                 currentdate = date.today()
-                if serviceDate >= currentdate:
+                if serviceDate < currentdate:
+                    messages.error(request,'date is not valid!! Please choose the correct date.')
+                    
+                else:
                     pst = ServiceBook(serviceType=serviceType, problemInVechile = problemInVechile, serviceDate = serviceDate,serviceTime = serviceTime)
                     pst.save()
                     if pst is not None:
                         messages.success(request,'Successfully booked!!')
                         form = postForm()
-                else:
-                    messages.error(request,'date is not valid!! Please choose the correct date.')
-            
                 # print(customerid)
-                
         else:
             form = postForm()
         return render(request, 'vehicle/addpost.html',{'form':form})
-    else:
-        return HttpResponseRedirect('/vehicle/login/')
 
 #update/edit post
 def update_booking(request,id):
@@ -203,12 +209,9 @@ def generate_pdf(request):
     p.drawString(200, 550, address)
     p.drawString(100, 500, "Total    :")
     p.drawString(200, 500, total)
-    
-
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
-
     # File response with PDF content.
     pdf = buffer.getvalue()
     buffer.close()
