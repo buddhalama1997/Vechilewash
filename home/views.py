@@ -36,8 +36,6 @@ def khalti_verification(request):
     data ={}
     return JsonResponse(data)
 
-
-
 # dashboard
 def dashboard(request):
     if request.user.is_authenticated:

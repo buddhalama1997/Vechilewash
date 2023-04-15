@@ -17,6 +17,5 @@ urlpatterns =[
    path('khalti-verification/',views.khalti_verification, name= 'khalti_verify'),
    path('updatepost/<int:id>/',views.update_booking, name= 'updatepost'),
    path('delete/<int:id>/',views.delete_booking, name= 'deletepost'),
-   path('generate-pdf/', views.generate_pdf, name='generate-pdf'),
-
+   path('generate-pdf/', views.generate_pdf, name='generate-pdf')
 ]
