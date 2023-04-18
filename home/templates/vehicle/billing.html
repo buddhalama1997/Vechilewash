@@ -10,7 +10,7 @@
               <div class="col-lg-6">
                 <div class="card-body p-md-5 mx-md-4">
   
-                <form method="POST" class= "text-danger" action="{% url 'khalti' %}">
+                <form method="POST" class= "text-danger" action="{% url 'generate-pdf' %}">
     {% csrf_token %}
     <div class="row">
       <div class="col-50">
@@ -42,7 +42,8 @@
                 <td><input type="text" id="total" name="total" placeholder="$$$"></td>
             </tr>
             <tr>
-                <td colspan="2"><button type="submit" class="text-danger">Generate Bill</button></td>
+                <td><button type="submit" class="text-danger" name="bill">Generate Bill</button></td>
+                <td><button type="submit" class="text-danger" name="online">Online Pay</button></td>
             </tr>
         </table>
       </div>

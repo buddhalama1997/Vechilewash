@@ -1,10 +1,10 @@
 body{
-  background-color: rgb(75, 74, 74);
+  background-color:#eee;
   color:antiquewhite; 
 }
 
 .jumbo-color{
-  background-color: rgb(83, 81, 81);
+  background-color: white;
 }
 
 form-control{
@@ -52,8 +52,8 @@ body {
   
 .container {
   padding: 5px 20px 15px 20px;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
+
+
 }
   
 input[type=text] {

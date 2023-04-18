@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'VechileWash.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'vechilewash',    # Replace with your MySQL database name
+        'USER': 'root',    # Replace with your MySQL database username
+        'PASSWORD': '',    # Replace with your MySQL database password
+        'HOST': 'localhost',    # Replace with the hostname or IP address of your MySQL server
+        'PORT': '3306',    # Replace with the port number of your MySQL server, or leave empty for default port
     }
 }
 

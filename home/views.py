@@ -182,37 +182,51 @@ def contact(request):
 
 
 def generate_pdf(request):
-    # Process the form submission and retrieve the form data
-    name = request.POST.get('name')
-    email = request.POST.get('email')
-    address = request.POST.get('address')
-    total = request.POST.get('total')
+    if request.method == 'POST':
+        if 'bill' in request.POST:
+            # Handle Button 1 click
+            # Redirect to URL for Button 1
+            # Process the form submission and retrieve the form data
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            address = request.POST.get('address')
+            total = request.POST.get('total')
 
+            
+            buffer = io.BytesIO()
+
+            # Create the PDF object, using the buffer as its "file."
+            p = canvas.Canvas(buffer)
+
+            # Draw things on the PDF. Here's where the PDF generation happens.
+            # See the ReportLab documentation for the full list of functionality.
+            p.drawString(100, 750, "Pathari Car Wash and Repairing Center")
+            p.drawString(100, 700, "Bill Amount")
+            p.drawString(100, 650, "Name    :")
+            p.drawString(200, 650, name)
+            
+            p.drawString(100, 600, "Email   :")
+            p.drawString(200, 600, email)
+            p.drawString(100, 550, "Address :")
+            p.drawString(200, 550, address)
+            p.drawString(100, 500, "Total    :")
+            p.drawString(200, 500, total)
+            # Close the PDF object cleanly, and we're done.
+            p.showPage()
+            p.save()
+            # File response with PDF content.
+            pdf = buffer.getvalue()
+            buffer.close()
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="hello.pdf"'
+            return response
+
+        elif 'online' in request.POST:
+            # Handle Button 2 click
+            # Redirect to URL for Button 2
+            total = request.POST.get('total')
+            return render(request,'vehicle/khalti.html',{'total':total})
+    else:
+        # Render the template for GET request
+        return render(request,'vehicle/billing.html') 
     
-    buffer = io.BytesIO()
-
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 750, "Pathari Car Wash and Repairing Center")
-    p.drawString(100, 700, "Bill Amount")
-    p.drawString(100, 650, "Name    :")
-    p.drawString(200, 650, name)
-    
-    p.drawString(100, 600, "Email   :")
-    p.drawString(200, 600, email)
-    p.drawString(100, 550, "Address :")
-    p.drawString(200, 550, address)
-    p.drawString(100, 500, "Total    :")
-    p.drawString(200, 500, total)
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
-    # File response with PDF content.
-    pdf = buffer.getvalue()
-    buffer.close()
-    response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="hello.pdf"'
-    return response
